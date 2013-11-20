@@ -2,6 +2,7 @@
   (:use [caves.entities.aspects.receiver :only [send-message]]
         [caves.entities.aspects.destructible :only [Destructible take-damage
                                                     defense-value]]
+        [caves.entities.aspects.learner :only [gain-experience]]
         [caves.entities.core :only [defaspect]]))
 
 
@@ -13,6 +14,7 @@
     (let [damage (get-damage this target world)]
       (->> world
         (take-damage target damage)
+        (gain-experience this 5)
         (send-message this "You strike the %s for %d damage!"
                       [(:name target) damage])
         (send-message target "The %s strikes you for %d damage!"
