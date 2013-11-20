@@ -82,10 +82,11 @@
 (defn draw-hud [screen game]
   (let [hud-row (dec (second (s/get-size screen)))
         player (get-in game [:world :entities :player])
-        {:keys [location hp max-hp]} player
+        {:keys [location hp max-hp common-exp]} player
         [x y] location
         info (str "hp [" hp "/" max-hp "]")
-        info (str info " loc: [" x "-" y "]")]
+        info (str info " loc: [" x "-" y "]")
+        info (str info " exp: " common-exp)]
     (s/put-string screen 0 hud-row info)))
 
 

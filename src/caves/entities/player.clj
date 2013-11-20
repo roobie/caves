@@ -5,11 +5,20 @@
         [caves.entities.aspects.digger :only [Digger dig can-dig?]]
         [caves.entities.aspects.attacker :only [Attacker attack]]
         [caves.entities.aspects.destructible :only [Destructible]]
+        [caves.entities.aspects.learner :only [Learner gain-experience]]
         [caves.coords :only [destination-coords]]
         [caves.world.core :only [get-entity-at]]))
 
 
-(defrecord Player [id glyph color location hp max-hp attack name])
+(defrecord Player [id
+                   glyph
+                   color
+                   location
+                   hp
+                   max-hp
+                   attack
+                   common-exp
+                   name])
 
 (extend-type Player Entity
   (tick [this world]
@@ -20,6 +29,7 @@
 (add-aspect Player Attacker)
 (add-aspect Player Destructible)
 (add-aspect Player Receiver)
+(add-aspect Player Learner)
 
 (defn make-player [location]
   (map->Player {:id :player
@@ -29,6 +39,7 @@
                 :location location
                 :hp 40
                 :max-hp 40
+                :common-exp 0
                 :attack 10}))
 
 (defn move-player [world dir]
